@@ -3,6 +3,7 @@ Focus on the operations on arrays(and hashset)
 
 Thinking before writing down the code:
 the result is sorted, so we can first sort the arrays. And no repeated results are needed, so we can also use hashset or manually remove the repeated ones
+Using Brute-Force two pointers
 
 Code:
 class Solution {
