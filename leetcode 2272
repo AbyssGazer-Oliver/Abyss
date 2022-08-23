@@ -1,0 +1,44 @@
+leetcode 2272
+Code:
+class Solution {
+    public int largestVariance(String s) {
+        int []freq=new int[26];
+        for(int i=0;i<s.length();i++){
+            freq[(int)(s.charAt(i)-'a')]++;
+        }
+        int result=0;
+        for(int a=0;a<26;a++){
+            for(int b=0;b<26;b++){
+                int remainingA=freq[a];
+                int remainingB=freq[b];
+                if(a==b||remainingA==0||remainingB==0)
+                    continue;
+                int currentA=0,currentB=0;
+                for(int i=0;i<s.length();i++){
+                    int c=(int)(s.charAt(i)-'a');
+                    if(c==b){
+                        currentB++;
+                    }
+                    if(c==a){
+                        currentA++;
+                        remainingA--;
+                    }
+                    if(currentA>0){
+                        result=Math.max(result,currentB-currentA);
+                    }
+                    if(currentB-currentA<0&&remainingA>=1){
+                        currentA=0;
+                        currentB=0;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+
+Question: Why are we doing remainingA-- in
+if(c == a) {
+currAFreq++;
+remainingA--;
+}?
