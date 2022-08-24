@@ -1,0 +1,25 @@
+Leetcode 937
+Code:
+class Solution {
+    public String[] reorderLogFiles(String[] logs) {
+        Arrays.sort(logs,(s1,s2)->{
+            String[] split1=s1.split(" ",2);
+            String[] split2=s2.split(" ",2);
+            
+            boolean Isdigit1=Character.isDigit(split1[1].charAt(0));
+            boolean Isdigit2=Character.isDigit(split2[1].charAt(0));
+            
+            if(!Isdigit1&&!Isdigit2){
+                int comp=split1[1].compareTo(split2[1]);
+                return comp==0?split1[0].compareTo(split2[0]):comp;
+            }else if(Isdigit1&&Isdigit2){
+                return 0;
+            }else if(Isdigit1&&!Isdigit2){
+                return 1;
+            }else{
+                return -1;
+            }
+        });
+        return logs;
+    }
+}
