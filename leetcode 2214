@@ -1,0 +1,13 @@
+Leetcode 2214
+Code:
+class Solution {
+    public long minimumHealth(int[] damage, int armor) {
+        long health=1;
+        int max=0;
+        for(int dam:damage){
+            health+=dam;
+            max=Math.max(dam,max);
+        }
+        return health-Math.min(max,armor);
+    }
+}
