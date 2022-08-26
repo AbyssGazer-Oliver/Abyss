@@ -1,0 +1,27 @@
+Leetcode 2281
+Code:
+class Solution {
+    public int totalStrength(int[] strength) {
+        int mod=1000000007;
+        int length=strength.length;
+        int result=0,ac=0;
+        Stack<Integer> stack=new Stack<>();
+        int []acc=new int[length+2];
+        for(int i=0;i<=length;i++){
+            int a=i<length?strength[i]:0;
+            ac=(ac+a)%mod;
+            acc[i+1]=(ac+acc[i])%mod;
+            while(!stack.isEmpty()&&strength[stack.peek()]>a){
+                int k=stack.pop();
+                int l=stack.isEmpty()?-1:stack.peek();
+                long lacc = l < 0 ? acc[k] : acc[k] - acc[l], racc = acc[i] - acc[k];
+                int ln = k - l, rn = i - k;
+                result = (int)(result + (racc * ln - lacc * rn) % mod * strength[k] % mod) % mod;
+            }
+            stack.push(i);
+        }
+        return (result+mod)%mod;
+    }
+}
+
+Monotonic stack?
