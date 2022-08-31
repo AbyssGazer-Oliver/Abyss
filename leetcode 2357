@@ -1,0 +1,17 @@
+class Solution {
+    public int minimumOperations(int[] nums) {
+        int result=0;
+        int []bucket=new int[101];
+        for(int e:nums){
+            if(e>0){
+               bucket[e]++; 
+            }
+        }
+        for(int b:bucket){
+            if(b>0){
+                result++;
+            }
+        }
+        return result;
+    }
+}
