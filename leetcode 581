@@ -1,0 +1,25 @@
+Leetcode 581
+Code:
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        if(nums.length==1){
+            return 0;
+        }
+        int n=nums.length,left=-1,right=-2;
+        int min=nums[n-1],max=nums[0];
+        for(int i=1;i<n;i++){
+            max=Math.max(max,nums[i]);
+            min=Math.min(min,nums[n-i-1]);
+            if(nums[i]<max)
+                right=i;
+            if(nums[n-i-1]>min){
+                left=n-i-1;
+            }
+        }
+        return right-left+1;
+    }
+}
+
+思路是Monotonic Stack，注意维护
+endIdx = The most right element having greater elements on the left side.
+begIdx = The most left element having smaller elements on the right side.
