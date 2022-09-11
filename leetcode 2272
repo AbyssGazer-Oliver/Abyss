@@ -37,6 +37,7 @@ class Solution {
     }
 }
 
+Kadanes Algorithm 记一下
 Question: Why are we doing remainingA-- in
 if(c == a) {
 currAFreq++;
