@@ -1,0 +1,62 @@
+Leetcode 1628
+Code:
+abstract class Node {
+    public abstract int evaluate();
+    Node left;
+    Node right;
+    int val;
+    // define your fields here
+    String op="";
+};
+
+class TreeNode extends Node{
+    TreeNode(int val){
+        this.val=val;
+    }
+    TreeNode(String op){
+        this.op=op;
+    }
+    public int evaluate(){
+        if(op.equals(""))
+            return this.val;
+        if(op.equals("+")){
+            return this.left.evaluate()+this.right.evaluate();
+        }else if(op.equals("-")){
+            return this.left.evaluate()-this.right.evaluate();
+        }else if(op.equals("*")){
+            return this.left.evaluate()*this.right.evaluate();
+        }else{
+            return this.left.evaluate()/this.right.evaluate();
+        }
+    }
+}
+
+/**
+ * This is the TreeBuilder class.
+ * You can treat it as the driver code that takes the postinfix input 
+ * and returns the expression tree represnting it as a Node.
+ */
+
+class TreeBuilder {
+    Node buildTree(String[] postfix) {
+        Stack<TreeNode> stack=new Stack<>();
+        for(String str:postfix){
+            if(IsOp(str)){
+                TreeNode right=stack.pop();
+                TreeNode left=stack.pop();
+                TreeNode operator=new TreeNode(str);
+                operator.right=right;
+                operator.left=left;
+                stack.push(operator);
+            }else{
+                stack.push(new TreeNode(Integer.parseInt(str)));
+            }
+        }
+        return stack.pop();
+    }
+    private boolean IsOp(String str){
+        return str.equals("+")||str.equals("-")||str.equals("*")||str.equals("/");
+    }
+};
+
+注意OOP思路
