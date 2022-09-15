@@ -1,0 +1,25 @@
+Leetcode 2262
+Code:
+class Solution {
+    public long appealSum(String s) {
+        int last[] = new int[26];
+        long res = 0, total = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            total += i + 1 - last[s.charAt(i) - 'a'];
+            last[s.charAt(i) - 'a'] = i + 1;
+            res += total;
+        }
+        return res;
+    }
+}
+DP思路：
+assume we have string xxxaxxxxb..., with s[i] = a and s[j] = b.
+s[i] is th last character a before that b.
+
+We want to count, how many substring ending at s[j] contains character a.
+They are xxxaxxxxb, xxaxxxxb, xaxxxxb, axxxxb ....,(暂时不知道)
+i + 1 substring ending with character a at s[i],(至少有i+1个包括a的substring，从a开始倒着数到s[0])
+so we do res += i + 1.
+
+We repeatly do this for every s[i] and every one of 26 characters.
+优化思路就是假设有string xxxaxxxxa...，中间这段axxxxa计算方式可以改为现在的i+1和原来s[i]之间的差值，加到res里
