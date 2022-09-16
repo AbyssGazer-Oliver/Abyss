@@ -1,0 +1,42 @@
+Leetcode 545
+Code:
+class Solution {
+    List<Integer> list=new ArrayList<>();
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        TreeNode dummy=root;
+        list.add(root.val);
+        leftbound(dummy.left);
+        leaves(dummy.left);
+        leaves(dummy.right);
+        rightbound(dummy.right);
+        return list;
+    }
+    private void leftbound(TreeNode dummy){
+        if(dummy==null||dummy.left==null&&dummy.right==null)
+            return;
+        list.add(dummy.val);
+        if(dummy.left!=null)
+            leftbound(dummy.left);
+        else
+            leftbound(dummy.right);
+    }
+    private void leaves(TreeNode dummy){
+        if(dummy==null)
+            return;
+        if(dummy.left==null&&dummy.right==null){
+            list.add(dummy.val);
+            return;
+        }
+        leaves(dummy.left);
+        leaves(dummy.right);
+    }
+    private void rightbound(TreeNode dummy){
+        if(dummy==null||dummy.left==null&&dummy.right==null)
+            return;
+        if(dummy.right!=null)
+            rightbound(dummy.right);
+        else
+            rightbound(dummy.left);
+        list.add(dummy.val);
+    }
+}
