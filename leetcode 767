@@ -1,0 +1,42 @@
+Leetcode 767
+Code:
+class Solution {
+    public String reorganizeString(String s) {
+        int []hash=new int[26];
+        for(int i=0;i<s.length();i++){
+            hash[s.charAt(i)-'a']++;
+        }
+        int max=0,letter=0;
+        for(int i=0;i<26;i++){
+            if(max<hash[i]){
+                max=hash[i];
+                letter=i;
+            }
+        }
+        if(max>(s.length()+1)/2){
+            return "";
+        }
+        int index=0;
+        char[] res=new char[s.length()];
+        while(hash[letter]>0){
+            res[index]=(char)(letter+'a');
+            index+=2;
+            hash[letter]--;
+        }
+        for(int i=0;i<26;i++){
+            while(hash[i]>0){
+                if(index>=res.length)
+                    index=1;
+                res[index]=(char)(i+'a');
+                index+=2;
+                hash[i]--;
+            }
+        }
+        return String.valueOf(res);
+    }
+}
+独特思路：记一下
+a _ a _ a _ _ _ _ // fill in "a" at position 0, 2, 4
+a b a _ a _ b _ b // fill in "b" at position 6, 8, 1
+a b a c a _ b _ b // fill in "c" at position 3
+a b a c a d b d b // fill in "d" at position 5, 7
