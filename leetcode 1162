@@ -1,0 +1,37 @@
+Leetcode 1162
+Code:
+class Solution {
+    public int maxDistance(int[][] grid) {
+        int m=grid.length,n=grid[0].length;
+        int res=-1;
+        Queue<int[]> q=new LinkedList<>();
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    q.offer(new int[]{i,j});
+                }
+            }
+        }
+        if(q.size()==m*n||q.size()==0)
+            return res;
+        int [][]dir=new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
+        while(!q.isEmpty()){
+            int size=q.size();
+            res++;
+            while(size-->0){
+                int []cur=q.poll();
+                for(int i=0;i<dir.length;i++){
+                    int x=cur[0]+dir[i][0];
+                    int y=cur[1]+dir[i][1];
+                    if(x>=0&&x<m&&y>=0&&y<n&&grid[x][y]==0){
+                        grid[x][y]=grid[cur[0]][cur[1]]+1;
+                        q.offer(new int[]{x,y});
+                    }
+                }
+            }
+        }
+        return res==0?-1:res;
+    }
+}
+
+Classical BFS，死了都要记住
