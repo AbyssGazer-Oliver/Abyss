@@ -1,0 +1,40 @@
+Leetcode 1631
+Code:
+class Solution {
+    int [][]dir=new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
+    public int minimumEffortPath(int[][] heights) {
+        int left= 0, right= 1000000;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (isPath(heights, mid)) {
+                right = mid;
+            }else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+    
+    private boolean isPath(int[][] h, int effort){
+        int m=h.length,n=h[0].length;
+        Queue<int[]> q=new LinkedList<>();
+        q.offer(new int[2]);
+        Set<Integer> seen=new HashSet<>();
+        seen.add(0);
+        while(!q.isEmpty()){
+            int []cur=q.poll();
+            int x=cur[0],y=cur[1];
+            if(x==m-1&&y==n-1)
+                return true;
+            for(int i=0;i<4;i++){
+                int x1=x+dir[i][0];
+                int y1=y+dir[i][1];
+                if(x1>=0&&x1<m&&y1>=0&&y1<n&&effort>=Math.abs(h[x][y]-h[x1][y1])&&seen.add(x1*n+y1))
+                    q.offer(new int[]{x1,y1});
+            }
+        }
+        return false;
+    }
+}
+
+DFS与BFS类似
