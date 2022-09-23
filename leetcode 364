@@ -1,0 +1,60 @@
+Leetcode 364
+Code:
+class Solution {
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        int res=0, pre=0;
+        Queue<NestedInteger> q=new LinkedList<>();
+        for(NestedInteger e:nestedList){
+            q.offer(e);
+        }
+        while(!q.isEmpty()){
+            int size=q.size();
+            int levelsum=0;
+            for(int i=0;i<size;i++){
+                NestedInteger ni= q.poll();
+                if(ni.isInteger())
+                    levelsum+=ni.getInteger();
+                List<NestedInteger> next=ni.getList();
+                if(next!=null){
+                    for(NestedInteger e:next){
+                        q.offer(e);
+                    }
+                }
+            }
+            pre+=levelsum;
+            res+=pre;
+        }
+        return res;
+    }
+}
+
+BFS的变式，注意"res+=pre"就是乘法了，每个pre累进×进去
+
+public class Solution {
+    
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        if(nestedList == null || nestedList.size() == 0) return 0;
+        int h = helper(nestedList);
+        int res = getSum(nestedList, h);
+        return res;
+    }
+    private int getSum(List<NestedInteger> l, int layer) {
+        int sum = 0;
+        if(l == null || l.size() == 0) return sum;
+        for(NestedInteger n : l) {
+            if(n.isInteger()) sum += n.getInteger() * layer;
+            else sum += getSum(n.getList(), layer - 1);
+        }
+        return sum;
+    }
+    private int helper(List<NestedInteger> l) {
+        if(l == null || l.size() == 0) return 0;
+        int max = 0;
+        for(NestedInteger n : l) {
+            if(n.isInteger()) max = Math.max(max, 1);
+            else max = Math.max(max, helper(n.getList()) + 1);
+        }
+        return max;
+    }
+}
+Two-pass DFS也可以解，注意思路掌握
