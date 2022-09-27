@@ -1,0 +1,18 @@
+Leetcode 1656
+Code:
+class OrderedStream {
+    private String[] str;
+    private int cur=0;
+    public OrderedStream(int n) {
+        str=new String[n];
+    }
+    
+    public List<String> insert(int idKey, String value) {
+        List<String> list=new LinkedList<>();
+        str[idKey-1]=value;
+        while(cur<str.length&&!(str[cur]==null)){
+            list.add(str[cur++]);
+        }
+        return list;
+    }
+}
