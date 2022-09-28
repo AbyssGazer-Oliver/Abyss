@@ -1,0 +1,29 @@
+Leetcode 59
+Code:
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] res=new int[n][n];
+        int row=0,col=0, rowlen=n-1,collen=n-1;
+        int num=1;
+        while(row<=rowlen&&col<=collen){
+            for(int i=col;i<=collen;i++){
+                res[row][i]=num++;
+            }
+            row++;
+            for(int i=row;i<=rowlen;i++){
+                res[i][collen]=num++;
+            }
+            collen--;
+            for(int i=collen;i>=col;i--){
+                res[rowlen][i]=num++;
+            }
+            rowlen--;
+            for(int i=rowlen;i>=row;i--){
+                res[i][col]=num++;
+            }
+            col++;
+        }
+        return res;
+    }
+}
+与leetcode54方法类似，注意掌握
