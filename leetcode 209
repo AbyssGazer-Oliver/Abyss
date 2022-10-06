@@ -1,0 +1,17 @@
+Leetcode 209
+Code:
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int sum=0,min=Integer.MAX_VALUE;
+        int i=0,j=0;
+        while(i<nums.length){
+            sum+=nums[i++];
+            while(sum>=target){
+                min=Math.min(min,i-j);
+                sum-=nums[j++];
+            }
+        }
+        return min==Integer.MAX_VALUE?0:min;
+    }
+}
+标准双指针滑动窗口 time O(n)
