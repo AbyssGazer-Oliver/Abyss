@@ -1,0 +1,30 @@
+Leetcode 430
+Code:
+class Solution {
+    public Node flatten(Node head) {
+        if(head==null)
+            return head;
+        return dfs(head);
+    }
+    private Node dfs(Node node){
+        Node n=node;
+        while(n!=null){
+            if(n.child!=null){
+                Node next=n.next;
+                n.next=dfs(n.child);
+                n.next.prev=n;
+                n.child=null;
+                while(n.next!=null)
+                    n=n.next;
+                if(next!=null){
+                    n.next=next;
+                    n.next.prev=n;
+                }
+            }
+            n=n.next;
+        }
+        return node; 
+    }
+}
+
+熟悉Node的写法
