@@ -1,0 +1,38 @@
+Leetcode 230
+Code:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> stack=new Stack<>();
+        helper(stack,root);
+        while(--k>0){
+            helper(stack,stack.pop().right);
+        }
+        return stack.pop().val;
+    }
+    private void helper(Stack<TreeNode> stack,TreeNode root){
+        while(root!=null){
+            stack.push(root);
+            root=root.left;
+        }
+    }
+}
+
+Complexity
+
+Time: O(H + k), where H is the height of the BST.
+Space: O(H)
