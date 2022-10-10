@@ -1,0 +1,67 @@
+Leetcode 588
+Code:
+class FileNode{
+    String name;
+    TreeMap<String,FileNode> dirs;
+    StringBuilder file;
+    public FileNode(String name){
+        this.name=name;
+        dirs=new TreeMap<>();
+        file=new StringBuilder();
+    }
+    public String getContent(){
+        return this.file.toString();
+    }
+    public void addContent(String content){
+        this.file.append(content);
+    }
+    public boolean isFile(){
+        return file.length()>0;
+    }
+    public List<String> getList(){
+        List<String> list = new ArrayList<>();
+        if(isFile()){
+            list.add(this.name);
+        }else{
+            list.addAll(dirs.keySet());
+        }
+        return list;
+    }
+}
+class FileSystem {
+    FileNode dir;
+    public FileSystem() {
+        dir=new FileNode("");
+    }
+    
+    public List<String> ls(String path) {
+        return this.findNode(path).getList();
+    }
+    
+    public void mkdir(String path) {
+        this.findNode(path);
+    }
+    
+    public void addContentToFile(String filePath, String content) {
+        this.findNode(filePath).addContent(content);
+    }
+    
+    public String readContentFromFile(String filePath) {
+        return this.findNode(filePath).getContent();
+    }
+    private FileNode findNode(String path){
+        String[] files=path.split("/");
+        FileNode cur=this.dir;
+        for(String str:files){
+            if(str.length()==0)
+                continue;
+            cur.dirs.putIfAbsent(str,new FileNode(str));
+            cur=cur.dirs.get(str);
+            if(cur.isFile())
+                break;
+        }
+        return cur;
+    }
+}
+
+Amazon常考题
