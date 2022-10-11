@@ -1,0 +1,24 @@
+Leetcode 797
+Code:
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<Integer> path=new ArrayList<>();
+        List<List<Integer>> list=new ArrayList<>();
+        path.add(0);
+        dfs(graph,list,path,0);
+        return list;
+    }
+    private void dfs(int[][] graph, List<List<Integer>> list,List<Integer> path ,int target){
+        if(target==graph.length-1){
+            list.add(new ArrayList<Integer>(path));
+            return;
+        }
+        for(int v:graph[target]){
+            path.add(v);
+            dfs(graph,list,path,v);
+            path.remove(path.size()-1);
+        }
+    }
+}
+
+标准回溯backtracking.
