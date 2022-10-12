@@ -1,0 +1,37 @@
+Leetcode 992
+Code:
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        int res=0,prefix=0,n=nums.length;
+        int[] a=new int[n+1];
+        for(int i=0,j=0,cnt=0;i<n;++i){
+            if(a[nums[i]]++==0)
+                cnt++;
+            if(cnt>k){
+                --a[nums[j++]];
+                cnt--;
+                prefix=0;
+            }
+            while(a[nums[j]]>1){
+                prefix++;
+                --a[nums[j++]];
+            }
+            if(cnt==k)
+                res+=prefix+1;
+        }
+        return res;
+    }
+}
+
+深刻领会讲解
+We can iterate through the array and use two pointers for our sliding window ([j, i]). The back of the window is always the current position in the array (i). 
+The front of the window (j) is moved so that A[j] appear only once in the sliding window. In other words, we are trying to shrink our sliding window while maintaining 
+the same number of unique elements.
+
+To do that, we keep tabs on how many times each number appears in our window (m). After we add next number to the back of our window, we try to remove as many as 
+possible numbers from the front, until the number in the front appears only once. While removing numbers, we are increasing prefix.
+
+If we collected K unique numbers, then we found 1 + prefix(why?) sequences, as each removed number would also form a sequence.
+
+If our window reached K + 1 unique numbers, we remove one number from the head (again, that number appears only in the front), and reset prefix as now we are 
+starting a new sequence. This process is demonstrated step-by-step for the test case below; prefix are shown as +1 in the green background.
