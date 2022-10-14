@@ -1,0 +1,27 @@
+Leetcode 337
+Code:
+class Solution {
+    public int rob(TreeNode root) {
+        int []res=traverse(root);
+        return Math.max(res[0],res[1]);
+    }
+    private int[] traverse(TreeNode root){
+        if(root==null)
+            return new int[2];
+        int []left=traverse(root.left);
+        int []right=traverse(root.right);
+        int []res=new int[2];
+        res[0]=Math.max(left[0],left[1])+Math.max(right[0],right[1]);
+        res[1]=root.val+left[0]+right[0];
+        return res;
+    }
+}
+
+贪心的思路要记住
+Case1: If we rob the root node - Then we can't rob the child nodes of root but we can rob the 4 grandchildren of the root 
+(i.e., root.left.left, root.left.right, root.right.left, root.right.right).
+
+Case2: If we don't rob the root node - Then we can rob the 2 children of root (i.e., root.left, root.right).
+And our answer will be maximum of the two cases.
+
+每次比较两个case的最大值
