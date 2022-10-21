@@ -1,0 +1,39 @@
+Leetcode 1570
+Code:
+class SparseVector {
+    List<int[]> list;
+    SparseVector(int[] nums) {
+        list=new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=0)
+                list.add(new int[]{i,nums[i]});
+        }
+    }
+    
+	// Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        if(vec.list.size()>list.size())
+            return vec.dotProduct(this);
+        int res=0;
+        for(int i=0;i<vec.list.size();i++){
+            int target=vec.list.get(i)[0];
+            int value=vec.list.get(i)[1];
+            res+=value*this.binarysearch(target,0,this.list.size()-1);
+        }
+        return res;
+    }
+    private int binarysearch(int target, int left,int right){
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(list.get(mid)[0]==target)
+                return list.get(mid)[1];
+            if(list.get(mid)[0]<target)
+                left=mid+1;
+            else
+                right=mid-1;
+        }
+        return 0;
+    }
+}
+
+注意此题follow-up question：if a array is not a sparse vector. 则O(min(m,n))算法为佳
