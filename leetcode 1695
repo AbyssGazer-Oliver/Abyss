@@ -1,0 +1,22 @@
+Leetcode 1695
+Code:
+class Solution {
+    public int maximumUniqueSubarray(int[] nums) {
+        int max=0,cur=0;
+        int n=nums.length;
+        Set<Integer> set=new HashSet<>();
+        for(int i=0,j=0;j<n;){
+            if(set.contains(nums[j])){
+                cur-=nums[i];
+                set.remove(nums[i++]);
+                continue;
+            }
+            cur+=nums[j];
+            max=Math.max(max,cur);
+            set.add(nums[j++]);
+        }
+        return max;
+    }
+}
+
+prefix-sum经典题目，要牢记
