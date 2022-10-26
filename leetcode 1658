@@ -1,0 +1,21 @@
+Leetcode 1658
+Code:
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int sum=0;
+        for(int num:nums){
+            sum+=num;
+        }
+        int max=-1,curSum=0;
+        for(int i=0,j=0;j<nums.length;j++){
+            curSum+=nums[j];
+            while(i<=j&&curSum>sum-x)
+                curSum-=nums[i++];
+            if(curSum==sum-x)
+                max=Math.max(max,j-i+1);
+        }
+        return max==-1?-1:nums.length-max;
+    }
+}
+
+正难则反，找中间最长的subarray即可
