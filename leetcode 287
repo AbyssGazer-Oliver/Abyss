@@ -1,0 +1,22 @@
+Leetcode 287
+Code:
+class Solution {
+    public int findDuplicate(int[] nums) {
+        if(nums.length==1||nums.length==2)
+            return nums[0];
+        int slow=nums[0];
+        int fast=nums[nums[0]];
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+        }
+        fast=0;
+        while(fast!=slow){
+            fast=nums[fast];
+            slow=nums[slow];
+        }
+        return slow;
+    }
+}
+
+Floyd 判圈法在数组上的应用要记得
