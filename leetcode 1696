@@ -1,0 +1,27 @@
+Leetcode 1696
+Code:
+class Solution {
+    public int maxResult(int[] nums, int k) {
+        int maxscore=0,n=nums.length;
+        int []dp=new int[n];
+        dp[n-1]=nums[n-1];
+        Deque<Integer> q=new LinkedList<>();
+        q.add(n-1);
+        for(int i=n-2;i>=0;i--){
+            while(!q.isEmpty()&&q.peek()>i+k){
+                q.removeFirst();
+            }
+            int next=dp[q.peek()];
+            dp[i]=nums[i]+next;
+            while(!q.isEmpty()&&dp[q.getLast()]<dp[i]){
+                q.removeLast();
+            }
+            q.add(i);
+        }
+        return dp[0];
+    }
+}
+
+Traverse nums from right to left filling dp vector where every dp[i] store the maximum score we get if we step on i .
+Now , for every i we need the maximum score on the right in range [i+1,i+k].For that we can maintain a decreasing deque to get the max in O(n)
+Reccurence Relation : dp[i] = nums[i]+max({dp[i+1]+dp[i+2]+. . .+dp[i+m]}) where m<=k && m<n
