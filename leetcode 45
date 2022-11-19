@@ -1,0 +1,21 @@
+Leetcode 45
+Code:
+class Solution {
+    public int jump(int[] nums) {
+        int max=0, cur=0, n=nums.length;
+        int step=0;
+        for(int i=0;i<n-1;i++){
+            max=Math.max(max,i+nums[i]);;
+            if(cur==i){
+                cur=max;
+                step++;
+            }
+            if(cur>n-1){
+                return step;
+            }
+        }
+        return step;
+    }
+}
+
+dp思想，保存上一个状态
