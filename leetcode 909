@@ -1,0 +1,38 @@
+Leetcode 909
+Code:
+class Solution {
+    public int snakesAndLadders(int[][] board) {
+        Deque<Integer> q=new LinkedList<>();
+        q.offer(1);
+        int n=board.length,res=0;
+        int goal=n*n;
+        boolean[] visited = new boolean[goal + 1];
+        while(!q.isEmpty()){
+            int size=q.size();
+            res++;
+            for(int i=size;i>0;i--){
+                int x=q.removeFirst();
+                if(visited[x])
+                    continue;
+                visited[x]=true;
+                if(x==goal)
+                    return res;
+                for(int j=1;j<=6&&x+j<=goal;j++){
+                    int y=x+j;
+                    if(y>goal)
+                        continue;
+                    int r=(y-1)/n;
+                    int c=(y-1)%n;
+                    int v=board[n-1-r][r%2==0?c:n-1-c];
+                    if(v>0)
+                        y=v;
+                    if(y==goal)
+                        return res;
+                    if(!visited[y])
+                        q.offer(y);
+                }
+            }
+        }
+        return -1;
+    }
+}
