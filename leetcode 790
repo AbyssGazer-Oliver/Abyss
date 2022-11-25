@@ -1,0 +1,17 @@
+Leetcode 790
+Code:
+class Solution {
+    public int numTilings(int n) {
+       int c1=1,c2=0,c3=-1;
+       int mod=1_000_000_007;
+       for(int i=1;i<=n;i++){
+           int cur=(int)((c1*2%mod+c3)%mod);
+           c3=c2;
+           c2=c1;
+           c1=cur;
+       }
+       return c1;
+    }
+}
+
+https://leetcode.com/problems/domino-and-tromino-tiling/solutions/116664/schematic-explanation-of-two-equivalent-dp-recurrence-formula/
