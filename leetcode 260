@@ -1,0 +1,27 @@
+Leetcode 260
+Code:
+class Solution {
+    public int[] singleNumber(int[] nums) {
+        int aXORb=0;
+        for(int num:nums){
+            aXORb^=num;
+        }
+        int rightmost=aXORb&(-aXORb);
+        int a=0;
+        for(int num:nums){
+            if((num&rightmost)!=0)
+                a^=num;
+        }
+        return new int[]{a,a^aXORb};
+    }
+}
+
+Bit Manipulation
+
+The idea is to use XOR to remove all numbers that appear exactly twice. Thus, in the first pass, we will XOR all nums in the input array. We will be left with XOR (aXORb) of two numbers that appear exactly once. (Let's call these numbers A and B.)
+
+In XOR, a bit is set in the result if both bits at the same locations are different.
+Now find the rightmost set bit in aXORb. This will give us the rightmost bit that is different in A & B.
+
+We can now go through all numbers in input array again (second pass) and XOR the numbers that have this bit set to 1. This will give us the first number A.
+To get the second number perform aXORb ^ A.
