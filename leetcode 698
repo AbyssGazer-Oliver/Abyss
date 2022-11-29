@@ -1,0 +1,33 @@
+Leetcode 698
+Code:
+class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum=0;
+        int []subsets=new int[k];
+        for(int num:nums){
+            sum+=num;
+        }
+        if(sum%k!=0)
+            return false;
+        sum/=k;
+        Arrays.sort(nums);
+        return backtrack(nums, nums.length-1, sum, subsets);
+    }
+    private boolean backtrack(int[] nums, int pos, int sum, int[] subset){
+        if(pos==-1)
+            return true;
+        for(int i=0;i<subset.length;i++){
+            if(subset[i]+nums[pos]<=sum){
+                subset[i]+=nums[pos];
+                if(backtrack(nums,pos-1,sum,subset))
+                    return true;
+                subset[i]-=nums[pos];
+            }
+            if(subset[i]==0)
+                break;
+        }
+        return false;
+    }
+}
+
+另一种backtrack，很强
