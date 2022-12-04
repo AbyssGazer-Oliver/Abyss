@@ -1,0 +1,38 @@
+Leetcode 894
+Code:
+class Solution {
+    Map<Integer, List<TreeNode>> map=new HashMap<>();
+    public List<TreeNode> allPossibleFBT(int n) {
+        return backtrack(n);
+    }
+
+    private List<TreeNode> backtrack(int n){
+        if(n==0||n%2==0) {
+            return new ArrayList<>();
+        }
+        if(n==1){
+            List<TreeNode> li=new ArrayList<>();
+            li.add(new TreeNode(0));
+            return li;
+        }
+        if (map.containsKey(n)) {
+            return map.get(n);
+        }
+        List<TreeNode> res=new ArrayList<>();
+        for(int l=1;l<=n-2;l++){
+            int r=n-1-l;
+            List<TreeNode> lefttree=backtrack(l);
+            List<TreeNode> righttree=backtrack(r);
+            for(TreeNode left:lefttree){
+                for(TreeNode right: righttree){
+                    res.add(new TreeNode(0,left,right));
+                }
+            }
+        }
+        map.put(n,res);
+        return res;
+    }
+}
+
+Memory DP 典型
+tree可以分为左边1...n-2个结点，给右边分n-....1个结点，构成不同子树
